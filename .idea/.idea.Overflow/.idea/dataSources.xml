@@ -8,11 +8,18 @@
       <jdbc-url>jdbc:postgresql://localhost:62500/?password=0GaB1Cxn64%7BTfR9*Umzqyx&amp;user=postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="postgres" uuid="df873b03-f4c5-4a6e-8a96-6fc9c27d477c">
+    <data-source source="LOCAL" name="postgres" uuid="f1acb20e-6f5a-49da-bca6-682b89689f86">
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:63663/?password=0GaB1Cxn64%7BTfR9*Umzqyx&amp;user=postgres</jdbc-url>
+      <jdbc-url>jdbc:postgresql://localhost:5432/?password=0GaB1Cxn64%7BTfR9*Umzqyx&amp;user=postgres</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
+    <data-source source="LOCAL" name="postgres" uuid="d671add9-05bb-48a8-9dbf-c23dbe69355f">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:52272/?password=0GaB1Cxn64%7BTfR9*Umzqyx&amp;user=postgres</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>
