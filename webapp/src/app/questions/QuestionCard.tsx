@@ -1,9 +1,12 @@
-﻿import {Question} from "@/lib/types";
+﻿'use client';
+
+import {Question} from "@/lib/types";
 import {Chip} from "@heroui/chip";
 import {Avatar} from "@heroui/avatar";
 import Link from "next/link";
 import clsx from "clsx";
 import {CheckIcon} from "@heroicons/react/24/solid";
+import {timeAgo} from "@/lib/util";
 type Props = {
     question: Question;
 }
@@ -68,7 +71,7 @@ export default function QuestionCard({ question }: Props) {
                             <Link href={`/profiles/${question.askerId}`}>
                                 {question.askerDisplayName}
                             </Link>
-                            <span>asked {question.createdAt}</span>
+                            <span>asked {timeAgo(question.createdAt)}</span>
                         </div>
                     </div>
                 </div>

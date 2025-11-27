@@ -9,9 +9,11 @@ type Params = Promise<{id: string}>
 
 export default async function QuestionDetailPage({ params }: { params: Params }) {
     const { id } = await params;
-    const question = await getQuestionsById(id);
+    const { data: question, error } = await getQuestionsById(id);
     
+    if (error) throw error;
     if (!question) return notFound();
+    
     return (
         <div className="w-full">
             <QuestionDetailedHeader question={question} />
