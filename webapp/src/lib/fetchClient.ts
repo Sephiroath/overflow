@@ -1,4 +1,5 @@
 ﻿import {notFound} from "next/navigation";
+import {auth} from "@/auth";
 
 
 export async function fetchClient<T>(
@@ -11,9 +12,11 @@ export async function fetchClient<T>(
     if (!apiUrl) {
         throw new Error('Missing API URL');
     }
+    const session = await auth();
     
     const headers : HeadersInit = {
         'Content-type': 'application/json',
+        ...(session?.accessToken ? {Authorization: `Bearer ${session.accessToken}`} : {}),
         ...(rest.headers || {})
     }
     const response = await fetch(apiUrl + url, {
@@ -37,14 +40,25 @@ export async function fetchClient<T>(
         }
         
         let message = '';
-        if (typeof parsed === 'string') {
-            message = parsed;
-        }else if (parsed?.message) {
-            message = parsed?.message;
+        
+        if (response.status === 401) {
+            const authHeader = response.headers.get('WWW-Authenticate');
+            if (authHeader?.includes('error_description')) {
+                const match = authHeader.match(/error_description="(.+?)"/);
+                if (match) message = match[1];
+            } else {
+                message = "You must be logged in to do that";
+            }
         }
         
-        if (!message) {
-            message = getFallbackMessage(response.status)
+        if(!message) {
+            if (typeof parsed === 'string') {
+                message = parsed;
+            }else if (parsed?.message) {
+                message = parsed?.message;
+            } else {
+                message = getFallbackMessage(response.status)
+            }
         }
         return { data: null, error: {message, status: response.status} };
     }
@@ -56,8 +70,6 @@ function getFallbackMessage(status: number) {
     switch (status) {
         case 400:
             return 'Bad Request, please check your input';
-        case 401:
-            return 'You must be logged in';
         case 403:
             return 'You do not have permission to access this resource';
         case 500:
